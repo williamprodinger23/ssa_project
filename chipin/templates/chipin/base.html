@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ChipIn</title>
+    <link rel="stylesheet" href="{% static 'chipin/styles.css' %}">
+    <link rel="icon" type="icon" href="{% static 'chipin/favicon.ico' %}" >
+</head>
+<body>
+    <header>
+        <div class="top_div">
+            <img src="{% static 'chipin/logo.png' %}" alt="ChipIn Logo">
+            <h1 class="title">{% block title %}ChipIn{% endblock %}</h1> <!-- Moved title inside top_div -->
+            <div class="user-info">
+                {% if request.user.is_authenticated %}
+                    <span>{{ request.user.username }}</span>
+                    <form action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:login' %}">Login</a>
+                    <a href="{% url 'users:register' %}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    <!-- Messages block -->
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 ChipIn</p>
+    </footer>
+</body>
+</html>

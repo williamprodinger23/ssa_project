@@ -1,8 +1,11 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
 /* Basic styling for the header section */
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #f4f4f4;
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
@@ -13,8 +16,30 @@
     max-height: 50px;
 }
 
+/* Style for top div */
+.top_div {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    background-color: #333; /* Background color for the navbar */
+    padding: 10px 20px; /* Padding for spacing */
+    color: white; /* Text color */
+    width:
+}
+
+.top_div img {
+    max-height: 50px;
+    margin-right: 20px;
+}
+
+.top_div div{
+    max-width: 50vw;
+    margin-right: 100px;
+}
+
+
 /* User info section within the header */
 .user-info {
+    margin-left: 100px;
     display: flex;
     align-items: center;
     font-size: 16px;
