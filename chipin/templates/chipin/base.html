@@ -10,10 +10,10 @@
     <header>
         <div class="top_div">
             <img src="{% static 'chipin/logo.png' %}" alt="ChipIn Logo">
-            <h1 class="title">{% block title %}ChipIn{% endblock %}</h1> <!-- Moved title inside top_div -->
+            <h1 class="title">{% block title %}ChipIn{% endblock %}</h1>
             <div class="user-info">
                 {% if request.user.is_authenticated %}
-                    <span>{{ request.user.username }}</span>
+                    <a href="{% url 'chipin:home' %}">Home</a> <span>{{ request.user.profile.nickname }}</span>
                     <form action="{% url 'users:logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
