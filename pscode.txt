@@ -1,0 +1,89 @@
+BEGIN login_view
+	Verify reCAPTCHA
+	Check reCAPTCHA response
+	IF reCAPTCHA is valid
+		Authenticate user
+	IF user has profile THEN
+		Redirect to next url
+	ELSE
+		default to user profile
+	REDIRECT to login page.
+END
+------------------------------------------------------
+BEGIN register
+	Provide Registration form
+	IF form is valid THEN
+		Save Form
+		REDIRECT to login page.
+	ELSE
+		REDIRECT to register page.
+END
+------------------------------------------------------
+BEGIN group_deatil
+	GET group from database
+	REDIRECT to group_deatil page passing group data.
+END
+------------------------------------------------------
+BEGIN vote_on_join_request
+	GET group from database
+	GET join request
+	IF user is not in group THEN
+		 REDIRECT to group_deatil page.
+	IF user has already voted THEN
+		REDIRECT to group_detail page.
+	REGISTER user's vote
+	IF more than 60% members approve THEN
+		Add user to group
+	REDIRECT to group_detail page.
+END	
+------------------------------------------------------
+BEGIN request_to_join_group
+	GET group from database
+	If user is in group THEN
+		REDIRECT to group_detail page.
+	SEND request to group
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+BEGIN delete_join_request
+	GET join request
+	IF request was sent by user THEN
+		DELETE request
+	REDIRECT to home page.
+END
+------------------------------------------------------
+BEGIN leave_group
+	GET group from database
+	IF user is in group THEN
+		REMOVE user from group
+	REDIRECT to home page.
+END
+------------------------------------------------------
+BEGIN delete_group
+	GET group from database
+	IF user is group admin THEN
+		DELETE group
+	REDIRECT to home page.		
+END
+------------------------------------------------------
+BEGIN invite_users
+	GET group from database
+	SHOW users not in group
+	IF user not in group THEN
+		ADD user to group.
+	IF invite successful THEN
+		REDIRECT to group_detail page.
+	ELSE
+		REDIRECT to invite_users page.
+END
+------------------------------------------------------
+BEGIN accept_invite
+	GET group from database
+	IF user exists THEN
+		IF user not in group THEN
+			ADD user to group
+			REMOVE user from invited_users
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+
