@@ -28,6 +28,29 @@ DEBUG = True
 RECAPTCHA_SECRET_KEY = "6LeMRm4qAAAAAPslEmmSL7zQBpwLV-YHw0R99ytB"
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'chipin_error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are only sent over HTTPS
+SESSION_COOKIE_HTTPONLY = True  # Prevents JavaScript access to session cookies
+SESSION_COOKIE_SAMESITE = 'Lax'  # Protects against Cross-Site Request Forgery (CSRF) attacks
+SESSION_COOKIE_AGE = 1800  # 30-minute session expiration
 
 # Application definition
 

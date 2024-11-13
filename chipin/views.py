@@ -8,6 +8,11 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from .forms import GroupCreationForm
 from .models import Group, GroupJoinRequest
+import logging
+from django.shortcuts import render
+from .models import Group
+# Set up logger
+logger = logging.getLogger(__name__)
 
 @login_required
 def home(request):
@@ -149,3 +154,20 @@ def vote_on_join_request(request, group_id, request_id, vote):
         join_request.save()
         messages.success(request, f"{join_request.user.profile.nickname} has been approved to join the group!") 
     return redirect('chipin:group_detail', group_id=group.id)
+
+def user_groups_view(request):
+    try:
+        # Simulate a potential error (e.g., a database issue)
+        if not request.user.is_authenticated:
+            raise PermissionError("User not authenticated.")
+        
+        groups = Group.objects.filter(members=request.user)
+        return render(request, 'chipin/user_groups.html', {'groups': groups})
+    
+    except PermissionError as e:
+        logger.error(f"Error: {e}")  # Log the error internally
+        return render(request, 'chipin/error.html', {'message': 'You must be logged in to view your groups.'})
+    
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")  # Catch all other errors
+        return render(request, 'chipin/error.html', {'message': 'An unexpected error occurred. Please try again later.'})
