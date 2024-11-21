@@ -86,4 +86,65 @@ BEGIN accept_invite
 	REDIRECT to group_detail page.
 END
 ------------------------------------------------------
+BEGIN create_event
+	GET group from database
+	IF user is admin THEN
+		CREATE event object.
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+BEGIN join_event
+	GET group from database
+	GET event from database
+	IF user max_spend > shared event cost AND user is in group THEN
+		ADD user to event
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+BEGIN update_event_status
+	GET group from database
+	GET event from database
+	IF user is admin THEN
+		CALCULATE event share.
+	LOOP FOR members in group
+		IF member max spend < event share THEN
+			event_status = Active
+		ELSE
+			event_status = Pending
+	REDIRECT to group_detail page.
+		
+END
+------------------------------------------------------
+BEGIN leave_event
+	GET group from database
+	GET event from database
+	IF member IS IN group THEN
+		REMOVE user
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+BEGIN delete_event
+	GET group from database
+	GET event from database
+	IF user is admin THEN
+		DELETE event.
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
+BEGIN edit_comment
+	GET comment from database.
+	IF user created comment THEN
+		IF form is valid THEN
+			SAVE comment.
+			REDIRECT to group_detail page.
+	REDIRECT to edit_comment form.
+END
+------------------------------------------------------
+BEGIN delete_comment
+	GET comment from database.
+	IF user created comment THEN
+		DELETE comment.
+	REDIRECT to group_detail page.
+END
+------------------------------------------------------
 
